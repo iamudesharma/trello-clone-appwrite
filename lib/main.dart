@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:trello_clone_appwrite/config/appwrite_config.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 Client client = Client();
 
@@ -30,7 +31,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ResponsiveApp(builder: (context) {
       return MaterialApp(
-          theme: ThemeData(useMaterial3: true), home: const LoginView());
+          theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.blue),
+          home: const LoginView());
     });
   }
 }
@@ -59,13 +61,87 @@ class LoginView extends StatelessWidget {
                   height: 5.screenHeight,
                 ),
                 Card(
+                  borderOnForeground: true,
+                  elevation: 2,
+                  color: Colors.white,
                   child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10)),
                     constraints: const BoxConstraints(
-                      minHeight: 300,
-                      maxHeight: 500,
+                      minHeight: 500,
+                      maxHeight: 800,
                       maxWidth: 450,
                       minWidth: 300,
                     ),
+                    child: VStack(
+                      [
+                        "Login in to Trello"
+                            .text
+                            .xl
+                            .extraBlack
+                            .gray500
+                            .makeCentered(),
+                        10.heightBox,
+                        VxTextField(
+                          borderType: VxTextFieldBorderType.roundLine,
+                          clear: false,
+                          labelText: "Email",
+                          hint: "Enter your email",
+                          enabled: true,
+                          validator: (p0) {
+                            if (p0!.isEmpty) {
+                              return "Email is required";
+                            }
+                            return null;
+                          },
+                        ),
+                        10.heightBox,
+                        VxTextField(
+                          isPassword: true,
+                          borderType: VxTextFieldBorderType.roundLine,
+                          clear: false,
+                          labelText: "Password",
+                          hint: "Enter your password",
+                          enabled: true,
+                          validator: (p0) {
+                            if (p0!.isEmpty) {
+                              return "Email is required";
+                            }
+                            return null;
+                          },
+                        ),
+                        20.heightBox,
+                        ElevatedButton.icon(
+                          icon: Icon(Icons.login),
+                          onPressed: () {},
+                          label: "Login".text.make(),
+                        ).wFull(context),
+                        20.heightBox,
+                        OutlinedButton.icon(
+                          icon: SvgPicture.network(
+                            "https://img.icons8.com/?size=512&id=V5cGWnc9R4xj&format=svg",
+                            fit: BoxFit.contain,
+                            height: 20,
+                            width: 20,
+                          ),
+                          onPressed: () {},
+                          label: "Continue with Google".text.make(),
+                        ).wFull(context),
+                        20.heightBox,
+                        OutlinedButton.icon(
+                          icon: SvgPicture.network(
+                            "https://img.icons8.com/?size=512&id=118497&format=svg",
+                            fit: BoxFit.contain,
+                            height: 20,
+                            width: 20,
+                          ),
+                          onPressed: () {},
+                          label: "Continue with Facebook".text.make(),
+                        ).wFull(context),
+                      ],
+                      alignment: MainAxisAlignment.center,
+                    ).p12(),
                   ),
                 ),
               ],
