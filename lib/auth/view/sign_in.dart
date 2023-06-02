@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -92,12 +93,18 @@ class SignInView extends HookConsumerWidget {
                           ElevatedButton.icon(
                             icon: const Icon(Icons.login),
                             onPressed: () async {
+                              final route = AutoRouter.of(context);
+                              await EasyLoading.show(status: "Loading...");
                               await ref
                                   .read(authControllerProvider.notifier)
                                   .signIn(
                                     email: _emailController.text,
                                     password: _passwordController.text,
                                   );
+
+                              await EasyLoading.dismiss();
+
+                              route.replaceNamed(HomeRoute.name);
                             },
                             label: "Login".text.make(),
                           ).wFull(context),

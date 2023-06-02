@@ -1,5 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -21,7 +22,7 @@ void main() async {
       watch: 200,
     ),
   );
-  
+
   runApp(const ProviderScope(
     child: MainApp(),
   ));
@@ -35,6 +36,7 @@ class MainApp extends HookConsumerWidget {
     final _appRouter = ref.watch(appRouterProvider);
     return ResponsiveApp(builder: (context) {
       return MaterialApp.router(
+        builder: EasyLoading.init(),
         routerConfig: _appRouter.config(),
         theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.blue),
       );
