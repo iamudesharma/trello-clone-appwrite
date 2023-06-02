@@ -2,10 +2,16 @@ import 'dart:math';
 
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:trello_clone_appwrite/dependency/appwrite_dependency.dart';
 
 import '../../dependency/repository_exception.dart';
 
-abstract class _IAuthReop {
+final _authRepoProvider = Provider<IAuthReop>((ref) {
+  return AuthRepo(ref.watch(AppWriteDependency.account));
+});
+
+abstract class IAuthReop {
   Future signInWithEmailAndPassword(String email, String password);
   Future<User?> signUpWithEmailAndPassword(
       String email, String password, String name);
@@ -17,7 +23,8 @@ abstract class _IAuthReop {
   Future<User?> currentUser();
 }
 
-class AuthRepo with RepositoryExceptionMixin implements _IAuthReop {
+class AuthRepo with RepositoryExceptionMixin implements IAuthReop {
+  static Provider<IAuthReop> get provider => _authRepoProvider;
   final Account account;
 
   AuthRepo(this.account);
@@ -66,6 +73,12 @@ class AuthRepo with RepositoryExceptionMixin implements _IAuthReop {
 
   @override
   Future<User?> currentUser() async {
-    return exceptionHandler(account.get());
+    try {
+      final user = account.get();
+
+      return user;
+    } catch (e) {
+      return null;
+    }
   }
 }
