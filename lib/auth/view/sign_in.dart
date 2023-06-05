@@ -62,6 +62,7 @@ class SignInView extends HookConsumerWidget {
                               .makeCentered(),
                           10.heightBox,
                           VxTextField(
+                            controller: _emailController,
                             borderType: VxTextFieldBorderType.roundLine,
                             clear: false,
                             labelText: "Email",
@@ -76,6 +77,7 @@ class SignInView extends HookConsumerWidget {
                           ),
                           10.heightBox,
                           VxTextField(
+                            controller: _passwordController,
                             isPassword: true,
                             borderType: VxTextFieldBorderType.roundLine,
                             clear: false,
@@ -94,7 +96,9 @@ class SignInView extends HookConsumerWidget {
                             icon: const Icon(Icons.login),
                             onPressed: () async {
                               final route = AutoRouter.of(context);
-                              await EasyLoading.show(status: "Loading...");
+                              await EasyLoading.show(
+                                  status: "Loading...",
+                                  maskType: EasyLoadingMaskType.clear);
                               await ref
                                   .read(authControllerProvider.notifier)
                                   .signIn(
