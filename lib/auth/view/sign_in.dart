@@ -25,129 +25,138 @@ class SignInView extends HookConsumerWidget {
         body: ResponsiveBuilder(
           builder: (context, sizingInformation) {
             return SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 5.screenHeight,
-                  ),
-                  Center(
-                    child: SvgPicture.network(
-                        "https://images.ctfassets.net/rz1oowkt5gyp/13zrkgNeK4xNziAQIfM3BT/44c6750e80104e3a38a61881c21a0923/trello-logo-blue.svg"),
-                  ),
-                  SizedBox(
-                    height: 5.screenHeight,
-                  ),
-                  Card(
-                    borderOnForeground: true,
-                    elevation: 2,
-                    color: Colors.white,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
-                      constraints: const BoxConstraints(
-                        minHeight: 500,
-                        maxHeight: 800,
-                        maxWidth: 450,
-                        minWidth: 300,
-                      ),
-                      child: VStack(
-                        [
-                          "Login in to Trello"
-                              .text
-                              .xl
-                              .extraBlack
-                              .gray500
-                              .makeCentered(),
-                          10.heightBox,
-                          VxTextField(
-                            controller: _emailController,
-                            borderType: VxTextFieldBorderType.roundLine,
-                            clear: false,
-                            labelText: "Email",
-                            hint: "Enter your email",
-                            enabled: true,
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return "Email is required";
-                              }
-                              return null;
-                            },
-                          ),
-                          10.heightBox,
-                          VxTextField(
-                            controller: _passwordController,
-                            isPassword: true,
-                            borderType: VxTextFieldBorderType.roundLine,
-                            clear: false,
-                            labelText: "Password",
-                            hint: "Enter your password",
-                            enabled: true,
-                            validator: (p0) {
-                              if (p0!.isEmpty) {
-                                return "Email is required";
-                              }
-                              return null;
-                            },
-                          ),
-                          20.heightBox,
-                          ElevatedButton.icon(
-                            icon: const Icon(Icons.login),
-                            onPressed: () async {
-                              final route = AutoRouter.of(context);
-                              await EasyLoading.show(
-                                  status: "Loading...",
-                                  maskType: EasyLoadingMaskType.clear);
-                              await ref
-                                  .read(authControllerProvider.notifier)
-                                  .signIn(
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                  );
-
-                              await EasyLoading.dismiss();
-
-                              route.replaceNamed(HomeRoute.name);
-                            },
-                            label: "Login".text.make(),
-                          ).wFull(context),
-                          20.heightBox,
-                          OutlinedButton.icon(
-                            icon: const Icon(Icons.account_circle),
-                            onPressed: () async {
-                              context.router.push(const SignUpRoute());
-                            },
-                            label: "Create An Account ".text.make(),
-                          ).wFull(context),
-                          20.heightBox,
-                          OutlinedButton.icon(
-                            icon: SvgPicture.network(
-                              "https://img.icons8.com/?size=512&id=V5cGWnc9R4xj&format=svg",
-                              fit: BoxFit.contain,
-                              height: 20,
-                              width: 20,
-                            ),
-                            onPressed: () {},
-                            label: "Create An Account".text.make(),
-                          ).wFull(context),
-                          20.heightBox,
-                          OutlinedButton.icon(
-                            icon: SvgPicture.network(
-                              "https://img.icons8.com/?size=512&id=118497&format=svg",
-                              fit: BoxFit.contain,
-                              height: 20,
-                              width: 20,
-                            ),
-                            onPressed: () {},
-                            label: "Continue with Facebook".text.make(),
-                          ).wFull(context),
-                        ],
-                        alignment: MainAxisAlignment.center,
-                      ).p12(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: getValueForScreenType<double>(
+                  context: context,
+                  mobile: 20,
+                  tablet: 10,
+                  desktop: 10,
+                )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 5.screenHeight,
                     ),
-                  ),
-                ],
+                    Center(
+                      child: SvgPicture.network(
+                          "https://images.ctfassets.net/rz1oowkt5gyp/13zrkgNeK4xNziAQIfM3BT/44c6750e80104e3a38a61881c21a0923/trello-logo-blue.svg"),
+                    ),
+                    SizedBox(
+                      height: 5.screenHeight,
+                    ),
+                    Card(
+                      borderOnForeground: true,
+                      elevation: 2,
+                      color: Colors.white,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
+                        constraints: const BoxConstraints(
+                          minHeight: 500,
+                          maxHeight: 800,
+                          maxWidth: 450,
+                          minWidth: 300,
+                        ),
+                        child: VStack(
+                          [
+                            "Login in to Trello"
+                                .text
+                                .xl
+                                .extraBlack
+                                .gray500
+                                .makeCentered(),
+                            10.heightBox,
+                            VxTextField(
+                              controller: _emailController,
+                              borderType: VxTextFieldBorderType.roundLine,
+                              clear: false,
+                              labelText: "Email",
+                              hint: "Enter your email",
+                              enabled: true,
+                              validator: (p0) {
+                                if (p0!.isEmpty) {
+                                  return "Email is required";
+                                }
+                                return null;
+                              },
+                            ),
+                            10.heightBox,
+                            VxTextField(
+                              controller: _passwordController,
+                              isPassword: true,
+                              borderType: VxTextFieldBorderType.roundLine,
+                              clear: false,
+                              labelText: "Password",
+                              hint: "Enter your password",
+                              enabled: true,
+                              validator: (p0) {
+                                if (p0!.isEmpty) {
+                                  return "Email is required";
+                                }
+                                return null;
+                              },
+                            ),
+                            20.heightBox,
+                            ElevatedButton.icon(
+                              icon: const Icon(Icons.login),
+                              onPressed: () async {
+                                final route = AutoRouter.of(context);
+                                await EasyLoading.show(
+                                    status: "Loading...",
+                                    maskType: EasyLoadingMaskType.clear);
+                                await ref
+                                    .read(authControllerProvider.notifier)
+                                    .signIn(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                    );
+
+                                await EasyLoading.dismiss();
+
+                                route.replaceNamed(HomeRoute.name);
+                              },
+                              label: "Login".text.make(),
+                            ).wFull(context),
+                            20.heightBox,
+                            OutlinedButton.icon(
+                              icon: const Icon(Icons.account_circle),
+                              onPressed: () async {
+                                context.router.push(const SignUpRoute());
+                              },
+                              label: "Create An Account ".text.make(),
+                            ).wFull(context),
+                            20.heightBox,
+                            OutlinedButton.icon(
+                              icon: SvgPicture.network(
+                                "https://img.icons8.com/?size=512&id=V5cGWnc9R4xj&format=svg",
+                                fit: BoxFit.contain,
+                                height: 20,
+                                width: 20,
+                              ),
+                              onPressed: () {},
+                              label: "Create An Account".text.make(),
+                            ).wFull(context),
+                            20.heightBox,
+                            OutlinedButton.icon(
+                              icon: SvgPicture.network(
+                                "https://img.icons8.com/?size=512&id=118497&format=svg",
+                                fit: BoxFit.contain,
+                                height: 20,
+                                width: 20,
+                              ),
+                              onPressed: () {},
+                              label: "Continue with Facebook".text.make(),
+                            ).wFull(context),
+                          ],
+                          alignment: MainAxisAlignment.center,
+                        ).p12(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
