@@ -20,23 +20,23 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-            page: SignInRoute.page,
-            path: "/sign-in",
-            type: const RouteType.adaptive(),
-            guards: [
-              AuthGuard(ref),
-            ]),
+          page: SignInRoute.page,
+          path: "/sign-in",
+          type: const RouteType.adaptive(),
+        ),
         AutoRoute(
           page: SignUpRoute.page,
           type: const RouteType.adaptive(),
           path: "/sign-up",
         ),
         AutoRoute(
-          page: HomeRoute.page,
-          type: const RouteType.adaptive(),
-          path: "/",
-          initial: true,
-        ),
+            page: HomeRoute.page,
+            type: const RouteType.adaptive(),
+            path: "/",
+            initial: true,
+            guards: [
+              AuthGuard(ref),
+            ]),
       ];
 }
 
