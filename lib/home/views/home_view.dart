@@ -1,15 +1,60 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:trello_clone_appwrite/home/widgets/board_card_widget.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 @RoutePage()
 class HomeView extends HookConsumerWidget {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold(
-        body: Center(
-      child: Text("Home"),
-    ));
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white10,
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add, size: 35),
+            )
+          ],
+          title: SvgPicture.network(
+            "https://images.ctfassets.net/rz1oowkt5gyp/13zrkgNeK4xNziAQIfM3BT/44c6750e80104e3a38a61881c21a0923/trello-logo-blue.svg",
+            height: 25,
+            color: Colors.white,
+          ),
+        ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SearchAnchor.bar(
+                barBackgroundColor: const MaterialStatePropertyAll(
+                  Colors.white10,
+                ),
+                isFullScreen: false,
+                barHintText: "Boards",
+                suggestionsBuilder: (context, controller) => [],
+              ),
+            ),
+            20.heightBox,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: "your workspaces".text.gray300.xl.uppercase.make(),
+                ),
+                BoardCardWidget(
+                  boardId: "",
+                  boardName: "",
+                  boardOwner: "",
+                ),
+              ],
+            )
+          ],
+        ));
   }
 }
