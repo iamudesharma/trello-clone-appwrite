@@ -12,7 +12,7 @@ final _authRepoProvider = Provider<IAuthReop>((ref) {
 });
 
 abstract class IAuthReop {
-  Future signInWithEmailAndPassword(String email, String password);
+  Future<Session?> signInWithEmailAndPassword(String email, String password);
   Future<User?> signUpWithEmailAndPassword(
       String email, String password, String name);
   Future signOut();
@@ -41,8 +41,8 @@ class AuthRepo with RepositoryExceptionMixin implements IAuthReop {
   }
 
   @override
-  Future signInWithEmailAndPassword(String email, String password) async {
-    await exceptionHandler(
+  Future<Session?> signInWithEmailAndPassword(String email, String password) async {
+   return await exceptionHandler<Session>(
         account.createEmailSession(email: email, password: password));
   }
 
@@ -67,14 +67,19 @@ class AuthRepo with RepositoryExceptionMixin implements IAuthReop {
   @override
   Future<User?> signUpWithEmailAndPassword(
       String email, String password, String name) async {
-    return await exceptionHandler(account.create(
-        userId: ID.unique(), email: email, password: password, name: name));
+    return await exceptionHandler(Future.wait([
+      account.create(
+          userId: ID.unique(), email: email, password: password, name: name),
+      currentUser(),
+    ]));
   }
 
   @override
   Future<User?> currentUser() async {
     try {
       final user = account.get();
+
+      print(user);
 
       return user;
     } catch (e) {

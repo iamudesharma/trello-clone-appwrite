@@ -116,7 +116,7 @@ class SignInView extends HookConsumerWidget {
 
                                 await EasyLoading.dismiss();
 
-                                route.replaceNamed(HomeRoute.name);
+                                // route.replaceNamed(HomeRoute.name);
                               },
                               label: "Login".text.make(),
                             ).wFull(context),

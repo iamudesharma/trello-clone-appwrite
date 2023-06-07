@@ -39,9 +39,9 @@ class _CreateBoardViewState extends ConsumerState<CreateBoardView> {
           TextButton(
             onPressed: () async {
               await ref.read(BoardRepo.provider).createBoard(BoardModel(
-                    members: [],
+                    // members: [],
                     id: ID.unique(),
-                    ownerId: _workSpaceList.value![0].ownerId,
+                    // ownerId: _workSpaceList.value![0].ownerId,
                     name: _boardNameController.text,
                     background: _colorAndImageProvider.color!.length == 1
                         ? "${_colorAndImageProvider.image}"

@@ -2,8 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:trello_clone_appwrite/home/views/create_borad_view.dart';
-import 'package:trello_clone_appwrite/home/views/select_backgrand_view.dart';
 import 'package:trello_clone_appwrite/home/views/work_space_view.dart';
 import 'package:trello_clone_appwrite/home/widgets/board_card_widget.dart';
 import 'package:trello_clone_appwrite/routes/app_router.dart';
@@ -18,7 +16,7 @@ class HomeView extends HookConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        context.router.pushWidget(WorkSpaceView());
+        // context.router.pushWidget(WorkSpaceView());
       },
       child: Scaffold(
           appBar: AppBar(

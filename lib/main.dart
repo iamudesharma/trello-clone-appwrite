@@ -39,9 +39,10 @@ class MainApp extends HookConsumerWidget {
         builder: EasyLoading.init(),
         routerConfig: _appRouter.config(),
         theme: ThemeData(
-            useMaterial3: true,
-            colorSchemeSeed: Colors.amber,
-            brightness: Brightness.dark),
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.amber, brightness: Brightness.dark),
+        ),
       );
     });
   }

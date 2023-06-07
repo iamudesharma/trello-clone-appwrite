@@ -1,5 +1,6 @@
 import 'package:appwrite/models.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:trello_clone_appwrite/dependency/logger.dart';
 
 import '../repo/auth_repo.dart';
 part 'auth_controller.g.dart';
@@ -13,9 +14,11 @@ class AuthController extends _$AuthController {
   Future<void> signIn({required String email, required String password}) async {
     state = const AsyncValue.loading();
 
-    await ref
+    final user = await ref
         .read(AuthRepo.provider)
         .signInWithEmailAndPassword(email, password);
+
+    logger.i(user?.toMap());
 
     state = AsyncValue.data(await ref.read(AuthRepo.provider).currentUser());
   }
