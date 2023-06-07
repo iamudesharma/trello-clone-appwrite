@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-import 'package:velocity_x/src/extensions/string_ext.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class BoardCardWidget extends StatelessWidget {
@@ -10,11 +9,14 @@ class BoardCardWidget extends StatelessWidget {
     required this.boardOwner,
     required this.boardName,
     required this.boardId,
+    required this.name,
   }) : super(key: key);
 
   final String boardOwner;
   final String boardName;
   final String boardId;
+  final String name;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class BoardCardWidget extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   10.widthBox,
-                  "Name".text.xl.make(),
+                  boardName.text.xl.make(),
                 ],
               ),
               const Spacer(),
@@ -50,6 +52,7 @@ class BoardCardWidget extends StatelessWidget {
           ),
         ),
         Container(
+            alignment: Alignment.centerLeft,
             decoration: const BoxDecoration(
                 color: Colors.white10,
                 border: Border.symmetric(
@@ -57,7 +60,8 @@ class BoardCardWidget extends StatelessWidget {
                   color: Colors.grey,
                 ))),
             height: 50,
-            width: MediaQuery.of(context).size.width),
+            width: MediaQuery.of(context).size.width,
+            child: Text(name).p12()),
       ],
     );
   }
