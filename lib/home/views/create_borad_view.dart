@@ -46,6 +46,8 @@ class _CreateBoardViewState extends ConsumerState<CreateBoardView> {
                     background: _colorAndImageProvider.color!.length == 1
                         ? "${_colorAndImageProvider.image}"
                         : "${_colorAndImageProvider.color![0].toHex()}|${_colorAndImageProvider.color![1].toHex()}",
+
+                    cards: [],
                   ));
             },
             child: Text(

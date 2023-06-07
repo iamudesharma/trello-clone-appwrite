@@ -2,41 +2,44 @@
 //
 //     final boardModel = boardModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
+import 'package:trello_clone_appwrite/model/card_model.dart';
 
-BoardModel boardModelFromJson(String str) => BoardModel.fromJson(json.decode(str));
+BoardModel boardModelFromJson(String str) =>
+    BoardModel.fromJson(json.decode(str));
 
 String boardModelToJson(BoardModel data) => json.encode(data.toJson());
 
 class BoardModel {
-    final String id;
-    // final String ownerId;
-    final String name;
-    final String background;
-    // final List<String> members;
+  final String id;
 
-    BoardModel({
-        required this.id,
-        // required this.ownerId,
-        required this.name,
-        required this.background,
-        // required this.members,
-    });
+  final String name;
+  final String background;
+  final List<CardModel> cards;
 
-    factory BoardModel.fromJson(Map<String, dynamic> json) => BoardModel(
+  BoardModel({
+    required this.id,
+    required this.name,
+    required this.background,
+    required this.cards,
+  });
+
+  factory BoardModel.fromJson(Map<String, dynamic> json) => BoardModel(
         id: json["id"],
         // ownerId: json["ownerId"],
         name: json["name"],
         background: json["background"],
+        cards: List<CardModel>.from(
+            json["cards"].map((x) => CardModel.fromMap(x))),
         // members: List<String>.from(json["members"].map((x) => x)),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         // "ownerId": ownerId,
         "name": name,
         "background": background,
+        "cards": List<dynamic>.from(cards.map((x) => x.toJson())),
         // "members": List<dynamic>.from(members.map((x) => x)),
-    };
+      };
 }
