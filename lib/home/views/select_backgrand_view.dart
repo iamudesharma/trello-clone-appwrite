@@ -16,6 +16,7 @@ class ColorAndImageModel {
   ColorAndImageModel({this.image, this.color, this.name});
 }
 
+@RoutePage()
 class SelectBackgroundView extends ConsumerStatefulWidget {
   const SelectBackgroundView({super.key});
 

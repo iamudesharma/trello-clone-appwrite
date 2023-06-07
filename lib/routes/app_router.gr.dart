@@ -21,6 +21,24 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeView(),
       );
     },
+    WorkSpaceRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WorkSpaceView(),
+      );
+    },
+    SelectBackgroundRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SelectBackgroundView(),
+      );
+    },
+    CreateBoardRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CreateBoardView(),
+      );
+    },
     SignInRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -46,6 +64,48 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WorkSpaceView]
+class WorkSpaceRoute extends PageRouteInfo<void> {
+  const WorkSpaceRoute({List<PageRouteInfo>? children})
+      : super(
+          WorkSpaceRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WorkSpaceRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SelectBackgroundView]
+class SelectBackgroundRoute extends PageRouteInfo<void> {
+  const SelectBackgroundRoute({List<PageRouteInfo>? children})
+      : super(
+          SelectBackgroundRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SelectBackgroundRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CreateBoardView]
+class CreateBoardRoute extends PageRouteInfo<void> {
+  const CreateBoardRoute({List<PageRouteInfo>? children})
+      : super(
+          CreateBoardRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateBoardRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
