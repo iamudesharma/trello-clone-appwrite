@@ -35,7 +35,6 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xffF7F9FB),
         body: ResponsiveBuilder(
           builder: (context, sizingInformation) {
             return SingleChildScrollView(
@@ -124,7 +123,7 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
                           ElevatedButton.icon(
                             icon: const Icon(Icons.login),
                             onPressed: () async {
-                               final route = AutoRouter.of(context);
+                              final route = AutoRouter.of(context);
                               await EasyLoading.show(status: "Loading...");
                               await ref
                                   .read(authControllerProvider.notifier)
@@ -136,7 +135,7 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
 
                               await EasyLoading.dismiss();
 
-                              route.replaceNamed(HomeRoute.name);
+                              route.popAndPush(const HomeRoute());
                             },
                             label: "Login".text.make(),
                           ).wFull(context),

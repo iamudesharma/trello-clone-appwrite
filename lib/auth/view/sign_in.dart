@@ -21,7 +21,7 @@ class SignInView extends HookConsumerWidget {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color(0xffF7F9FB),
+        // backgroundColor: const Color(0xffF7F9FB),
         body: ResponsiveBuilder(
           builder: (context, sizingInformation) {
             return SingleChildScrollView(
@@ -116,7 +116,7 @@ class SignInView extends HookConsumerWidget {
 
                                 await EasyLoading.dismiss();
 
-                                // route.replaceNamed(HomeRoute.name);
+                                route.popAndPush(const HomeRoute());
                               },
                               label: "Login".text.make(),
                             ).wFull(context),
