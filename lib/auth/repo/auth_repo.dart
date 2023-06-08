@@ -41,8 +41,9 @@ class AuthRepo with RepositoryExceptionMixin implements IAuthReop {
   }
 
   @override
-  Future<Session?> signInWithEmailAndPassword(String email, String password) async {
-   return await exceptionHandler<Session>(
+  Future<Session?> signInWithEmailAndPassword(
+      String email, String password) async {
+    return await exceptionHandler<Session>(
         account.createEmailSession(email: email, password: password));
   }
 
@@ -77,11 +78,13 @@ class AuthRepo with RepositoryExceptionMixin implements IAuthReop {
   @override
   Future<User?> currentUser() async {
     try {
-      final user = account.get();
+      final user = await account.get();
 
-      print(user);
+      print(user.toMap());
 
       return user;
+    } on AppwriteException catch (e) {
+      return null;
     } catch (e) {
       return null;
     }
