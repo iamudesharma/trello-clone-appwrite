@@ -30,7 +30,7 @@ class BoardModel {
         name: json["name"],
         background: json["background"],
         cards: List<CardModel>.from(
-            json["cards"].map((x) => CardModel.fromMap(x))),
+            json["cards"].map((x) => CardModel.fromJson(x))),
         // members: List<String>.from(json["members"].map((x) => x)),
       );
 

@@ -1,17 +1,44 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+// To parse this JSON data, do
+//
+//     final cardModel = cardModelFromJson(jsonString);
+
 import 'dart:convert';
 
+CardModel cardModelFromJson(String str) => CardModel.fromJson(json.decode(str));
+
+String cardModelToJson(CardModel data) => json.encode(data.toJson());
+
 class CardModel {
-  final String workSpaceId;
-  final String ownerId;
-  final String name;
-  final List<Task> tasks;
+  String workSpaceId;
+  String ownerId;
+  String name;
+  List<Task> tasks;
+
   CardModel({
     required this.workSpaceId,
     required this.ownerId,
     required this.name,
     required this.tasks,
   });
+
+  factory CardModel.fromJson(Map<String, dynamic> json,
+          {bool isFromCard = false}) =>
+      CardModel(
+        workSpaceId: json["workSpaceId"],
+        ownerId: json["ownerId"],
+        name: json["name"],
+        tasks: !isFromCard
+            ? []
+            : List<Task>.from(json["tasks"].map((x) => Task.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "workSpaceId": workSpaceId,
+        "ownerId": ownerId,
+        "name": name,
+        "tasks": List<dynamic>.from(tasks.map((x) => x.toJson())),
+      };
 
   CardModel copyWith({
     String? workSpaceId,
@@ -26,53 +53,22 @@ class CardModel {
       tasks: tasks ?? this.tasks,
     );
   }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'workSpaceId': workSpaceId,
-      'ownerId': ownerId,
-      'name': name,
-      'tasks': tasks.map((x) => x.toMap()).toList(),
-    };
-  }
-
-  factory CardModel.fromMap(Map<String, dynamic> map) {
-    return CardModel(
-      tasks: [],
-      workSpaceId: map['workSpaceId'] as String,
-      ownerId: map['ownerId'] as String,
-      name: map['name'] as String,
-      // tasks:  List<Task>.from(map['tasks']?.map((x) => Task.fromJson(x))),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory CardModel.fromJson(String source) =>
-      CardModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() =>
-      'CardModel(workSpaceId: $workSpaceId, ownerId: $ownerId, name: $name)';
-
-  @override
-  bool operator ==(covariant CardModel other) {
-    if (identical(this, other)) return true;
-
-    return other.workSpaceId == workSpaceId &&
-        other.ownerId == ownerId &&
-        other.name == name;
-  }
-
-  @override
-  int get hashCode => workSpaceId.hashCode ^ ownerId.hashCode ^ name.hashCode;
 }
 
 class Task {
-  final String name;
+  String name;
+
   Task({
     required this.name,
   });
+
+  factory Task.fromJson(Map<String, dynamic> json) => Task(
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+      };
 
   Task copyWith({
     String? name,
@@ -81,34 +77,4 @@ class Task {
       name: name ?? this.name,
     );
   }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'name': name,
-    };
-  }
-
-  factory Task.fromMap(Map<String, dynamic> map) {
-    return Task(
-      name: map['name'] as String,
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Task.fromJson(String source) =>
-      Task.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() => 'Task(name: $name)';
-
-  @override
-  bool operator ==(covariant Task other) {
-    if (identical(this, other)) return true;
-
-    return other.name == name;
-  }
-
-  @override
-  int get hashCode => name.hashCode;
 }
