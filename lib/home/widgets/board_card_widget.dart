@@ -10,12 +10,14 @@ class BoardCardWidget extends StatelessWidget {
     required this.boardName,
     required this.boardId,
     required this.name,
+    required this.onTap,
   }) : super(key: key);
 
   final String boardOwner;
   final String boardName;
   final String boardId;
   final String name;
+  final void Function()? onTap;
   
 
   @override
@@ -51,17 +53,20 @@ class BoardCardWidget extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-            alignment: Alignment.centerLeft,
-            decoration: const BoxDecoration(
-                color: Colors.white10,
-                border: Border.symmetric(
-                    horizontal: BorderSide(
-                  color: Colors.grey,
-                ))),
-            height: 50,
-            width: MediaQuery.of(context).size.width,
-            child: Text(name).p12()),
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+              alignment: Alignment.centerLeft,
+              decoration: const BoxDecoration(
+                  color: Colors.white10,
+                  border: Border.symmetric(
+                      horizontal: BorderSide(
+                    color: Colors.grey,
+                  ))),
+              height: 50,
+              width: MediaQuery.of(context).size.width,
+              child: Text(name).p12()),
+        ),
       ],
     );
   }
