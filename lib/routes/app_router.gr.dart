@@ -51,6 +51,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const SignUpView(),
       );
     },
+    CardRouteList.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CardViewList(),
+      );
+    },
   };
 }
 
@@ -134,6 +140,20 @@ class SignUpRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SignUpRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CardViewList]
+class CardRouteList extends PageRouteInfo<void> {
+  const CardRouteList({List<PageRouteInfo>? children})
+      : super(
+          CardRouteList.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CardRouteList';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

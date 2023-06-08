@@ -6,6 +6,7 @@ import 'package:trello_clone_appwrite/auth/controller/auth_controller.dart';
 import 'package:trello_clone_appwrite/auth/repo/auth_repo.dart';
 import '../auth/view/sign_in.dart';
 import '../auth/view/sign_up.dart';
+import '../cards/card_view.dart';
 import '../home/views/create_borad_view.dart';
 import '../home/views/home_view.dart';
 import '../home/views/select_backgrand_view.dart';
@@ -58,6 +59,13 @@ class AppRouter extends _$AppRouter {
           type: const RouteType.adaptive(),
           path: "/work-space",
         ),
+        AutoRoute(
+          page: CardRouteList.page,
+          type: const RouteType.adaptive(),
+          path: "/card-view",
+        ),
+
+
       ];
 }
 
@@ -67,9 +75,15 @@ class AuthGuard extends AutoRouteGuard {
   AuthGuard(this.ref);
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-    if (await ref.read(AuthRepo.provider).currentUser() != null) {
-      resolver.next(true);
-    } else {
+    try {
+      final data = await ref.read(AuthRepo.provider).currentUser();
+
+      if (data != null) {
+        resolver.next(true);
+      } else {
+        resolver.redirect(const SignInRoute());
+      }
+    } catch (e) {
       resolver.redirect(const SignInRoute());
     }
   }
