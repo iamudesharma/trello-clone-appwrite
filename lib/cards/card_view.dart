@@ -17,13 +17,19 @@ final _cardListProvider = FutureProvider<List<CardModel>?>((ref) async {
 
 @RoutePage()
 class CardViewList extends ConsumerWidget {
-  const CardViewList({super.key});
+  const CardViewList({
+    @PathParam("boardName") required this.boradName,
+  });
+  final String boradName;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cardData = ref.watch(_cardListProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(boradName),
+      ),
       body: cardData.when(
           data: (data) => CardsView(cardData: data),
           error: (error, stackTrace) => Center(child: Text(error.toString())),
@@ -63,18 +69,24 @@ class _CardsViewState extends ConsumerState<CardsView> {
       },
       onMoveGroupItemToGroup:
           (fromGroupId, fromIndex, toGroupId, toIndex) async {
-        await ref.read(CardRepo.provider).updateCard(
-              "647f20b1d04ca5856d7e",
-              widget.cardData!.removeAt(fromIndex),
-            );
+        final formData = widget.cardData
+            ?.where((element) => element.name == fromGroupId)
+            .toList()
+            .first;
+        final toData = widget.cardData
+            ?.where((element) => element.name == toGroupId)
+            .toList()
+            .first;
+        formData?.tasks.removeAt(fromIndex);
+
+        toData?.tasks.insert(toIndex, formData!.tasks[fromIndex]);
 
         await ref.read(CardRepo.provider).updateCard(
-              "64817b526ed94e796eec",
-              widget.cardData![fromIndex].copyWith(
-                name: widget.cardData![fromIndex].name,
-                tasks: widget.cardData![fromIndex].tasks,
-              ),
-            );
+            "6482beb23ac596d3d1c0", formData!.copyWith(tasks: formData.tasks));
+
+        await ref.read(CardRepo.provider).updateCard(
+            "6482becd2ed541a5bc88", formData!.copyWith(tasks: formData.tasks));
+
         debugPrint("move itm  to different group");
 
         debugPrint('Move $fromGroupId:$fromIndex to $toGroupId:$toIndex');
@@ -139,65 +151,67 @@ class _CardsViewState extends ConsumerState<CardsView> {
       groupBackgroundColor: HexColor.fromHex('#F7F8FC'),
       stretchGroupHeight: false,
     );
-    return Builder(builder: (context) {
-      return PrimaryScrollController(
-        controller: scrollController,
-        scrollDirection: Axis.horizontal,
-        child: AppFlowyBoard(
-            scrollController: scrollController,
-            controller: controller,
-            cardBuilder: (context, group, groupItem) {
-              return AppFlowyGroupCard(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background),
-                key: ValueKey(groupItem.id),
-                child: _buildCard(groupItem),
-              );
-            },
-            boardScrollController: boardController,
-            footerBuilder: (context, columnData) {
-              return AppFlowyGroupFooter(
-                icon: const Icon(Icons.add, size: 20),
-                title: const Text('New',
-                    style: TextStyle(fontSize: 12, color: Colors.black)),
-                height: 50,
-                margin: config.groupItemPadding,
-                onAddButtonClick: () {
-                  boardController.scrollToBottom(columnData.id);
-                },
-              );
-            },
-            headerBuilder: (context, columnData) {
-              return AppFlowyGroupHeader(
-                icon: const Icon(Icons.lightbulb_circle, color: Colors.black),
-                title: Container(
-                  width: 100,
-                  child: TextField(
-                    style: TextStyle(fontSize: 12, color: Colors.black),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      filled: true,
+    return SafeArea(
+      child: Builder(builder: (context) {
+        return PrimaryScrollController(
+          controller: scrollController,
+          scrollDirection: Axis.horizontal,
+          child: AppFlowyBoard(
+              scrollController: scrollController,
+              controller: controller,
+              cardBuilder: (context, group, groupItem) {
+                return AppFlowyGroupCard(
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.background),
+                  key: ValueKey(groupItem.id),
+                  child: _buildCard(groupItem),
+                );
+              },
+              boardScrollController: boardController,
+              footerBuilder: (context, columnData) {
+                return AppFlowyGroupFooter(
+                  icon: const Icon(Icons.add, size: 20),
+                  title: const Text('New',
+                      style: TextStyle(fontSize: 12, color: Colors.black)),
+                  height: 50,
+                  margin: config.groupItemPadding,
+                  onAddButtonClick: () {
+                    boardController.scrollToBottom(columnData.id);
+                  },
+                );
+              },
+              headerBuilder: (context, columnData) {
+                return AppFlowyGroupHeader(
+                  icon: const Icon(Icons.lightbulb_circle, color: Colors.black),
+                  title: Container(
+                    width: 100,
+                    child: TextField(
+                      style: TextStyle(fontSize: 12, color: Colors.black),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        filled: true,
+                      ),
+                      controller: TextEditingController()
+                        ..text = columnData.headerData.groupName,
+                      onSubmitted: (val) {
+                        controller
+                            .getGroupController(columnData.headerData.groupId)!
+                            .updateGroupName(val);
+                      },
                     ),
-                    controller: TextEditingController()
-                      ..text = columnData.headerData.groupName,
-                    onSubmitted: (val) {
-                      controller
-                          .getGroupController(columnData.headerData.groupId)!
-                          .updateGroupName(val);
-                    },
-                  ),
-                ).card.rounded.make(),
-                addIcon: const Icon(Icons.add, color: Colors.black, size: 20),
-                moreIcon:
-                    const Icon(Icons.more_horiz, color: Colors.black, size: 20),
-                height: 50,
-                margin: config.groupItemPadding,
-              );
-            },
-            groupConstraints: const BoxConstraints.tightFor(width: 240),
-            config: config),
-      );
-    });
+                  ).card.rounded.make(),
+                  addIcon: const Icon(Icons.add, color: Colors.black, size: 20),
+                  moreIcon: const Icon(Icons.more_horiz,
+                      color: Colors.black, size: 20),
+                  height: 50,
+                  margin: config.groupItemPadding,
+                );
+              },
+              groupConstraints: const BoxConstraints.tightFor(width: 240),
+              config: config),
+        );
+      }),
+    );
   }
 
   Widget _buildCard(AppFlowyGroupItem item) {
