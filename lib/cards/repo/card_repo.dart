@@ -71,9 +71,10 @@ class CardRepo extends ICardRepo {
   @override
   Future<void> updateCard(String cardId, CardModel model) async {
     database.updateDocument(
-        collectionId: AppWriteConfig.cardcollectionId,
-        databaseId: AppWriteConfig.databaseId,
-        documentId: cardId,
-        data: model.toJson());
+      collectionId: AppWriteConfig.cardcollectionId,
+      databaseId: AppWriteConfig.databaseId,
+      documentId: cardId,
+      data: model.toJson(),
+    );
   }
 }
