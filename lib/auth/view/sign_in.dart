@@ -49,10 +49,8 @@ class SignInView extends HookConsumerWidget {
                     Card(
                       borderOnForeground: true,
                       elevation: 2,
-                      color: Colors.white,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.white,
                             borderRadius: BorderRadius.circular(10)),
                         constraints: const BoxConstraints(
                           minHeight: 500,
