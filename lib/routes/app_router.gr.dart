@@ -52,9 +52,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     CardRouteList.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<CardRouteListArgs>(
+          orElse: () =>
+              CardRouteListArgs(boradName: pathParams.getString('boardName')));
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const CardViewList(),
+        child: CardViewList(boradName: args.boradName),
       );
     },
   };
@@ -146,14 +150,30 @@ class SignUpRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CardViewList]
-class CardRouteList extends PageRouteInfo<void> {
-  const CardRouteList({List<PageRouteInfo>? children})
-      : super(
+class CardRouteList extends PageRouteInfo<CardRouteListArgs> {
+  CardRouteList({
+    required String boradName,
+    List<PageRouteInfo>? children,
+  }) : super(
           CardRouteList.name,
+          args: CardRouteListArgs(boradName: boradName),
+          rawPathParams: {'boardName': boradName},
           initialChildren: children,
         );
 
   static const String name = 'CardRouteList';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<CardRouteListArgs> page =
+      PageInfo<CardRouteListArgs>(name);
+}
+
+class CardRouteListArgs {
+  const CardRouteListArgs({required this.boradName});
+
+  final String boradName;
+
+  @override
+  String toString() {
+    return 'CardRouteListArgs{boradName: $boradName}';
+  }
 }
