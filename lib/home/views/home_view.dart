@@ -65,7 +65,9 @@ class HomeView extends HookConsumerWidget {
                       data.length,
                       (index) => BoardCardWidget(
                           onTap: () {
-                            context.router.push(const CardRouteList());
+                            context.router.push(CardRouteList(
+                              boradName: data[index].board[0].name,
+                            ));
                           },
                           name: data[index].board.isEmpty
                               ? "Add Board"
