@@ -60,22 +60,24 @@ class HomeView extends HookConsumerWidget {
                     child: "your workspaces".text.gray300.xl.uppercase.make(),
                   ),
                   _workSpaceList.when(
-                    data: (data) => Column(
-                        children: List.generate(
-                      data.length,
-                      (index) => BoardCardWidget(
-                          onTap: () {
-                            context.router.push(CardRouteList(
-                              boradName: data[index].board[0].name,
-                            ));
-                          },
-                          name: data[index].board.isEmpty
-                              ? "Add Board"
-                              : data[index].board[0].name,
-                          boardId: data[index].ownerId,
-                          boardName: data[index].name,
-                          boardOwner: ""),
-                    )),
+                    data: (data) => data.isEmpty
+                        ? Container()
+                        : Column(
+                            children: List.generate(
+                            data.length,
+                            (index) => BoardCardWidget(
+                                onTap: () {
+                                  context.router.push(CardRouteList(
+                                    boradName: data[index].board[index].name,
+                                  ));
+                                },
+                                name: data[index].board.isEmpty
+                                    ? "Add Board"
+                                    : data[index].board[index].name,
+                                boardId: data[index].ownerId,
+                                boardName: data[index].name,
+                                boardOwner: ""),
+                          )),
                     error: (error, stackTrace) => Text(error.toString()),
                     loading: () => const Center(
                       child: CircularProgressIndicator.adaptive(),

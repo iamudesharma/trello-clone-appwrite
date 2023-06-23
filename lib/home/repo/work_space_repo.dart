@@ -46,6 +46,7 @@ class WorkSpaceRepo extends IWorkSpaceRepo {
 
   @override
   Future<List<WorkSpaceModel>> getWorkSpaces({required String id}) async {
+    List<WorkSpaceModel> boards = [];
     final docs = await database.listDocuments(
         databaseId: AppWriteConfig.databaseId,
         collectionId: AppWriteConfig.workSpacecollectionId,
@@ -58,10 +59,10 @@ class WorkSpaceRepo extends IWorkSpaceRepo {
       return [];
     } else {
       logger.i(docs.documents[0].data);
-      logger.i(docs.documents[0].toMap());
+      // logger.i(docs.documents[0].toMap());
 
-      final boards =
-          docs.documents.map((e) => WorkSpaceModel.fromJson(e.data)).toList();
+      boards.add(WorkSpaceModel.fromJson(docs.documents[0].data));
+
       return boards;
     }
   }

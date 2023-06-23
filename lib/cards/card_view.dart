@@ -105,7 +105,7 @@ class _CardsViewState extends ConsumerState<CardsView> {
           name: widget.cardData![i].name,
           items: List.generate(
             widget.cardData![i].tasks.length,
-            (index) => TextItem(widget.cardData![i].tasks[index].name),
+            (index) => TextItem(widget.cardData![i].tasks[index].title),
           ));
 
       controller.addGroup(group1);
@@ -116,7 +116,7 @@ class _CardsViewState extends ConsumerState<CardsView> {
         name: widget.cardData![0].name,
         items: List.generate(
           widget.cardData![0].tasks.length,
-          (index) => TextItem(widget.cardData![0].tasks[index].name),
+          (index) => TextItem(widget.cardData![0].tasks[index].title),
         ));
 
     final group2 = AppFlowyGroupData(
@@ -140,7 +140,6 @@ class _CardsViewState extends ConsumerState<CardsView> {
 
   @override
   void didChangeDependencies() async {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
 

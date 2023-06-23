@@ -2,7 +2,9 @@ import '../../model/card_model.dart';
 
 abstract class ITaskRepo {
   Future createTask(Task taskModel);
-  Future<List<Task>>? getTasks({required String id});
+  Future<List<Task>>? getTasks({
+    required String boardId,
+  });
   Future getTask(String taskId);
   Future deleteTask(String taskId);
   Future<void> updateTask(String taskId, Task taskModel);
@@ -28,8 +30,9 @@ class TaskRepo extends ITaskRepo {
   }
 
   @override
-  Future<List<Task>>? getTasks({required String id}) {
-    // TODO: implement getTasks
+  Future<List<Task>>? getTasks({
+    required String boardId,
+  }) {
     throw UnimplementedError();
   }
 

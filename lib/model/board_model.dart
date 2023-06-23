@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 import 'package:trello_clone_appwrite/model/card_model.dart';
+import 'package:trello_clone_appwrite/model/work_space_model.dart';
 
 BoardModel boardModelFromJson(String str) =>
     BoardModel.fromJson(json.decode(str));
@@ -29,6 +30,7 @@ class BoardModel {
         // ownerId: json["ownerId"],
         name: json["name"],
         background: json["background"],
+
         cards: List<CardModel>.from(
             json["cards"].map((x) => CardModel.fromJson(x))),
         // members: List<String>.from(json["members"].map((x) => x)),

@@ -17,12 +17,13 @@ class WorkSpaceModel {
   });
 
   WorkSpaceModel copyWith({
-    String? id,
+    String? ownerId,
     String? name,
     List<String>? members,
+    List<BoardModel>? board,
   }) {
     return WorkSpaceModel(
-      ownerId: id ?? this.ownerId,
+      ownerId: ownerId ?? this.ownerId,
       name: name ?? this.name,
       members: members ?? this.members,
       board: board ?? this.board,
@@ -40,7 +41,7 @@ class WorkSpaceModel {
   factory WorkSpaceModel.fromJson(Map<String, dynamic> json) => WorkSpaceModel(
         ownerId: json["ownerId"],
         name: json["name"],
-        members: List<String>.from(json["members"].map((x) => x)),
+        members: [],
         board: List<BoardModel>.from(
             json["board"].map((x) => BoardModel.fromJson(x))),
       );
